@@ -37,6 +37,29 @@ namespace MvcTodoApp.Controllers
             }
             return RedirectToAction("Index");
         }
+            // 1. حذف المهمة
+[HttpPost]
+public IActionResult DeleteTask(int id)
+{
+    var task = tasks.FirstOrDefault(t => t.Id == id);
+    if (task != null)
+    {
+        tasks.Remove(task);
+    }
+    return RedirectToAction("Index");
+}
+
+// 2. تعديل المهمة (استقبال النص الجديد)
+[HttpPost]
+public IActionResult EditTask(int id, string newTitle)
+{
+    var task = tasks.FirstOrDefault(t => t.Id == id);
+    if (task != null && !string.IsNullOrEmpty(newTitle))
+    {
+        task.Title = newTitle;
+    }
+    return RedirectToAction("Index");
+}
 
         /// <summary>
         /// تعيين مهمة كمكتملة.
